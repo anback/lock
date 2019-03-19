@@ -24,7 +24,7 @@ class Auth0WebAPI {
 
   logIn(lockID, options, authParams, cb) {
     let { logIn } = this.opts;
-    if (logIn) return logIn().catch(cb);
+    if (logIn) return logIn(options, authParams).catch(cb);
     this.clients[lockID].logIn(options, authParams, cb);
   }
 
@@ -38,7 +38,7 @@ class Auth0WebAPI {
 
   resetPassword(lockID, options, cb) {
     let { resetPassword } = this.opts;
-    if (resetPassword) return resetPassword().catch(cb);
+    if (resetPassword) return resetPassword(options).catch(cb);
     this.clients[lockID].resetPassword(options, cb);
   }
 
