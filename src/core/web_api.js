@@ -3,6 +3,7 @@ import Auth0APIClient from './web_api/p2_api';
 class Auth0WebAPI {
   constructor() {
     this.clients = {};
+    this.opts = {};
   }
 
   setupClient(lockID, clientID, domain, opts) {
@@ -18,9 +19,12 @@ class Auth0WebAPI {
     }
 
     this.clients[lockID] = new Auth0APIClient(lockID, clientID, domain, opts);
+    this.opts = opts;
   }
 
   logIn(lockID, options, authParams, cb) {
+    let { logIn } = this.opts;
+    if (logIn) return logIn().catch(cb);
     this.clients[lockID].logIn(options, authParams, cb);
   }
 
@@ -33,6 +37,8 @@ class Auth0WebAPI {
   }
 
   resetPassword(lockID, options, cb) {
+    let { resetPassword } = this.opts;
+    if (resetPassword) return resetPassword().catch(cb);
     this.clients[lockID].resetPassword(options, cb);
   }
 
